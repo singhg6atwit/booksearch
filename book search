@@ -1,0 +1,98 @@
+// Define a Book struct to represent a single book
+struct Book {
+    char title[50];
+    char author[50];
+    int year;
+};
+
+// Define a BookSearch struct to represent the search functionality
+struct BookSearch {
+    struct Book books[50];
+    int num_books;
+};
+
+// Define a function to add a book to the search results
+void add_book(struct BookSearch *search, struct Book book) {
+    // Add the book to the end of the array
+    search->books[search->num_books] = book;
+
+    // Increment the number of books in the search results
+    search->num_books++;
+}
+
+// Define a function to search for books by title
+struct BookSearch search_by_title(struct Book books[], int num_books, char *title) {
+    struct BookSearch search_results;
+    search_results.num_books = 0;
+
+    // Loop through all the books and check if the title matches
+    for (int i = 0; i < num_books; i++) {
+        if (strcmp(books[i].title, title) == 0) {
+            add_book(&search_results, books[i]);
+        }
+    }
+
+    return search_results;
+}
+
+// Define a function to search for books by author
+struct BookSearch search_by_author(struct Book books[], int num_books, char *author) {
+    struct BookSearch search_results;
+    search_results.num_books = 0;
+
+    // Loop through all the books and check if the author matches
+    for (int i = 0; i < num_books; i++) {
+        if (strcmp(books[i].author, author) == 0) {
+            add_book(&search_results, books[i]);
+        }
+    }
+
+    return search_results;
+}
+
+// Define a function to search for books by publication year
+struct BookSearch search_by_year(struct Book books[], int num_books, int year) {
+    struct BookSearch search_results;
+    search_results.num_books = 0;
+
+    // Loop through all the books and check if the year matches
+    for (int i = 0; i < num_books; i++) {
+        if (books[i].year == year) {
+            add_book(&search_results, books[i]);
+        }
+    }
+
+    return search_results;
+}
+
+// Define a BookFileReader struct to read book data from a file
+struct BookFileReader {
+    FILE *file;
+};
+
+// Define a function to open a book data file
+struct BookFileReader open_book_file(char *filename) {
+    struct BookFileReader reader;
+    reader.file = fopen(filename, "r");
+
+    return reader;
+}
+
+// Define a function to close a book data file
+void close_book_file(struct BookFileReader *reader) {
+    fclose(reader->file);
+}
+
+// Define a function to read book data from a file
+void read_books(struct BookFileReader *reader, struct Book books[], int *num_books) {
+    *num_books = 0;
+
+    // Loop through the file and read book data
+    char line[100];
+    while (fgets(line, 100, reader->file)) {
+        char *title = strtok(line, ",");
+        char *author = strtok(NULL, ",");
+        char *year_str = strtok(NULL, ",");
+       
+
+    }
